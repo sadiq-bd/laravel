@@ -19,6 +19,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // force https when application is in production mode && not using localhost
+        if($this->app->environment('production')) {
+            if (!empty($_SERVER['HTTP_HOST']) && !preg_match('/(127\.0\.0\.\d+|192\.168\.\d+\.\d+|localhost)(\:\d+)?/i', $_SERVER['HTTP_HOST'])) {
+                    \URL::forceScheme('https');
+            }
+                 
+         }
+        
     }
 }
