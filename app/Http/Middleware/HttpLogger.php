@@ -24,7 +24,7 @@ class HttpLogger
         $start = defined('LARAVEL_START') ? LARAVEL_START : microtime(true);
 
         // Generate or retrieve token
-        $token = $request->cookie('_token');
+        $token = $request->cookie('id_token');
         if (empty($token) || strlen($token) > 100) {
             $token = substr(md5(uniqid()), 0, 100);
         }
@@ -70,6 +70,6 @@ class HttpLogger
         ]);
 
         // Return the response with the token cookie
-        return $response->withCookie(cookie()->forever('_token', $token));
+        return $response->withCookie(cookie()->forever('id_token', $token));
     }
 }
